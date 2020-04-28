@@ -28,14 +28,20 @@ class MahasiswaController extends Controller
 
     public function simpan(Request $request)
     {
+        $this->validate($request,[
+            'namamhs'    => 'required',
+            'nimmhs'     => 'required|numeric',
+            'emailmhs'   => 'required|email',
+            'jurusanmhs' => 'required'
+        ]);
         //tambah data ke table mhs
         DB::table('mahasiswa')->insert([
-            'nama' => $request->namamhs,
-            'nim' => $request->nimmhs,
-            'email' => $request->emailmhs,
+            'nama'    => $request->namamhs,
+            'nim'     => $request->nimmhs,
+            'email'   => $request->emailmhs,
             'jurusan' => $request->jurusanmhs
         ]);
-        return redirect('/mahasiswa');
+        return view('simpan',['data' => $request]);
         
     }
 
